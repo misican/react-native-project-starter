@@ -1,0 +1,147 @@
+// android/app/build.gradle
+
+// Apply standard Gradle plugins for Android, Kotlin, and React Native
+apply plugin: "com.android.application"
+apply plugin: "org.jetbrains.kotlin.android"
+apply plugin: "com.facebook.react"
+
+// The React Native plugin configuration allows customizing how JS bundles are built
+// and how native libraries are linked during build.
+react {
+    // (Optional) If you have multiple debug variants, you can specify them here to skip certain bundling steps.
+    // e.g. debuggableVariants = ["devDebug", "stagingDebug"]
+
+    // Autolink libraries with your app. This automatically links React Native modules declared in package.json.
+    autolinkLibrariesWithApp()
+}
+
+// Toggle ProGuard (code minification and obfuscation) for release builds.
+// Setting 'true' can significantly reduce APK size, but be mindful of ProGuard rules.
+def enableProguardInReleaseBuilds = false
+
+// The preferred JSC (JavaScriptCore) flavor.
+// - jsc-android: Smaller, default JSC with minimal locale support
+// - jsc-android-intl: Larger, supports international features
+def jscFlavor = 'io.github.react-native-community:jsc-android:2026004.+'
+
+// Configure the main Android block, which defines compilation settings, SDK versions, etc.
+android {
+    // Use versions defined in your root project's ext
+    ndkVersion rootProject.ext.ndkVersion
+    buildToolsVersion rootProject.ext.buildToolsVersion
+    compileSdk rootProject.ext.compileSdkVersion
+
+    // -------- NAMESPACE --------
+    // The namespace is the package identifier in your native Android code.
+    // Usually follows your applicationId, but they can be different if needed.
+    namespace "com.reactnativeprojectstarter"
+
+    // -------- DEFAULT CONFIG --------
+    // Set global defaults shared by all build variants/flavors
+    defaultConfig {
+        // The unique app ID recognized on the device and in the Play Store.
+        // Change this if you rename or rebrand your app; must remain constant
+        // across updates once published to maintain the same app identity.
+        applicationId "com.reactnativeprojectstarter"
+
+        // Minimum Android OS level your app supports
+        minSdkVersion rootProject.ext.minSdkVersion
+        // Android OS level your app targets for testing and API features
+        targetSdkVersion rootProject.ext.targetSdkVersion
+
+        // Versioning for your app. Version code must increment with every Play Store release.
+        versionCode 1
+        // User-facing version name (e.g. "1.0.0", "2.1", etc.)
+        versionName "1.0"
+    }
+
+    // -------- SIGNING CONFIGS --------
+    // Place your signing information here. We define both debug and release configs so we can sign
+    // different build variants accordingly.
+    signingConfigs {
+        debug {
+            // Default debug.keystore, auto-generated for non-production use.
+            storeFile file('debug.keystore')
+            storePassword 'android'
+            keyAlias 'androiddebugkey'
+            keyPassword 'android'
+        }
+        release {
+            // Uncomment and replace with your real keystore info for production builds:
+            // storeFile file("my-release-key.keystore")
+            // storePassword "YOUR_KEYSTORE_PASSWORD"
+            // keyAlias "YOUR_KEY_ALIAS"
+            // keyPassword "YOUR_KEY_PASSWORD"
+        }
+    }
+
+    // -------- PRODUCT FLAVORS --------
+    // Define separate build variants for different environments. Each flavor can have its own:
+    // - Application ID suffix
+    // - Version name suffix
+    // - Signing config (optional)
+    // - Other resource overrides (icons, strings, etc.)
+    flavorDimensions "default"
+    productFlavors {
+        dev {
+            // The dimension is "default" in this example. If you use multiple dimensions, rename accordingly.
+            dimension "default"
+            // Installing dev flavor with a separate suffix lets you keep dev and prod side-by-side on a device.
+            applicationIdSuffix ".dev"
+            versionNameSuffix "-dev"
+            // Adjust these if dev environment requires a different minSdkVersion, or custom signing.
+        }
+        staging {
+            dimension "default"
+            applicationIdSuffix ".staging"
+            versionNameSuffix "-staging"
+            // Use for QA or pre-production testing.
+        }
+        uat {
+            dimension "default"
+            applicationIdSuffix ".uat"
+            versionNameSuffix "-uat"
+            // Use for user acceptance testing.
+        }
+        prod {
+            dimension "default"
+            // Typically no suffix, matching your main applicationId. This is what goes to production.
+            // If you require a separate keystore for prod, you can add 'signingConfig signingConfigs.release' here as well.
+        }
+    }
+
+    // -------- BUILD TYPES --------
+    // "debug" and "release" are the standard build types. You can add more if needed.
+    buildTypes {
+        debug {
+            // Typically uses the debug signing config.
+            // Debug builds are not optimized or obfuscated, for faster iteration and testing.
+            signingConfig signingConfigs.debug
+        }
+        release {
+            // Use release signing if you have a real keystore set up.
+            // If not, can temporarily point to debug signing, but do not do this for production!
+            // signingConfig signingConfigs.release
+            signingConfig signingConfigs.debug
+
+            // Enables/disables code and resource shrink (ProGuard/R8).
+            minifyEnabled enableProguardInReleaseBuilds
+            // ProGuard configuration files for rules. The default plus any custom rules you define.
+            proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
+        }
+    }
+}
+
+// -------- DEPENDENCIES --------
+// The version of react-native is managed by the React Native Gradle plugin.
+dependencies {
+    // Core React Native Android library
+    implementation("com.facebook.react:react-android")
+
+    // Conditional Hermes/JSC engine selection.
+    if (hermesEnabled.toBoolean()) {
+        implementation("com.facebook.react:hermes-android")
+    } else {
+        implementation jscFlavor
+    }
+}

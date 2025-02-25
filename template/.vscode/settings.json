@@ -1,0 +1,28 @@
+{
+  "psi-header.changes-tracking": {
+    "isActive": true,
+    "modAuthor": "Modified By: ",
+    "modDate": "Last Modified: ",
+    "modDateFormat": "MMMM Do YYYY, h:mm:ss a",
+    "include": [],
+    "exclude": ["markdown", "jsonc"],
+    "excludeGlob": ["out/**", "src/**/*.xyz"],
+    "autoHeader": "autoSave"
+  },
+  "psi-header.templates": [
+    {
+      "language": "*",
+      "template": [
+        "Created: <<filecreated('dddd, MMMM Do YYYY, h:mm:ss a')>>",
+        "Author: <<author>> (<<authoremail>>)",
+        "-------------------------------",
+        "Last Modified: <<dateformat('dddd, MMMM Do YYYY, h:mm:ss a')>>",
+        "Modified By: <<author>> (<<authoremail>>)"
+      ]
+    }
+  ],
+  "psi-header.variables": [
+    ["author", "Melvin Isican"],
+    ["authoremail", "mj.isican.dev@gmail.com"]
+  ]
+}

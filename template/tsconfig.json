@@ -1,0 +1,29 @@
+/*
+ * Created: Thursday, February 20th 2025, 3:42:34 pm
+ * Author: Melvin Isican (mj.isican.dev@gmail.com)
+ * -------------------------------
+ * Last Modified: Thursday, February 20th 2025, 5:32:36 pm
+ * Modified By: Melvin Isican (mj.isican.dev@gmail.com)
+ */
+
+ {
+  "extends": "@react-native/typescript-config/tsconfig.json",
+  "compilerOptions": {
+    "baseUrl": "src",
+    "paths": {
+      "@components/*": ["components/*"],
+      "@screens/*": ["screens/*"],
+      "@utils-numbers/*": ["utils/numbers/*"]
+    }
+  },
+  "include": ["**/*.ts", "**/*.tsx"],
+  "exclude": [
+    "node_modules",
+    "babel.config.js",
+    "metro.config.js",
+    "jest.config.js",
+    "**/__tests__/**/*",
+    "**/*.test.ts",
+    "**/*.test.tsx"
+  ],
+}

@@ -1,0 +1,79 @@
+{
+  "name": "reactnativeprojectstarter",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "android": "react-native run-android",
+    "ios": "react-native run-ios",
+    "lint": "eslint .",
+    "start": "react-native start",
+    "test": "jest",
+    "test:coverage:components": "jest --coverage --verbose --collectCoverageFrom='src/components/**/*.tsx' --detectOpenHandles --runInBand",
+    "test:coverage:utils": "jest --coverage --verbose --collectCoverageFrom='src/utils/**/*.ts' --detectOpenHandles --runInBand",
+    "prepare": "husky",
+    "postinstall": "git config core.editor cat",
+    "android:dev:debug": "cd android && ./gradlew assembleDevDebug",
+    "android:dev:release": "cd android && ./gradlew assembleDevRelease",
+    "android:dev:bundle": "cd android && ./gradlew bundleDevRelease",
+    "android:staging:debug": "cd android && ./gradlew assembleStagingDebug",
+    "android:staging:release": "cd android && ./gradlew assembleStagingRelease",
+    "android:staging:bundle": "cd android && ./gradlew bundleStagingRelease",
+    "android:uat:debug": "cd android && ./gradlew assembleUatDebug",
+    "android:uat:release": "cd android && ./gradlew assembleUatRelease",
+    "android:uat:bundle": "cd android && ./gradlew bundleUatRelease",
+    "android:prod:debug": "cd android && ./gradlew assembleProdDebug",
+    "android:prod:release": "cd android && ./gradlew assembleProdRelease",
+    "android:prod:bundle": "cd android && ./gradlew bundleProdRelease"
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
+  },
+  "lint-staged": {
+    "*.{js,jsx,ts,tsx}": [
+      "eslint --fix",
+      "prettier --write"
+    ],
+    "*.json": [
+      "prettier --write"
+    ]
+  },
+  "dependencies": {
+    "react": "19.0.0",
+    "react-native": "0.78.0",
+    "react-native-config": "^1.5.5"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.25.2",
+    "@babel/preset-env": "^7.25.3",
+    "@babel/runtime": "^7.25.0",
+    "@commitlint/cli": "^19.7.1",
+    "@commitlint/config-conventional": "^19.7.1",
+    "@react-native-community/cli": "15.0.1",
+    "@react-native-community/cli-platform-android": "15.0.1",
+    "@react-native-community/cli-platform-ios": "15.0.1",
+    "@react-native/babel-preset": "0.78.0",
+    "@react-native/eslint-config": "0.78.0",
+    "@react-native/metro-config": "0.78.0",
+    "@react-native/typescript-config": "0.78.0",
+    "@testing-library/react-native": "^13.0.1",
+    "@types/jest": "^29.5.13",
+    "@types/react": "^19.0.0",
+    "@types/react-test-renderer": "^19.0.0",
+    "babel-plugin-module-resolver": "^5.0.2",
+    "commitizen": "^4.3.1",
+    "cz-conventional-changelog": "^3.3.0",
+    "eslint": "^8.19.0",
+    "husky": "^9.1.7",
+    "jest": "^29.6.3",
+    "lint-staged": "^15.4.3",
+    "prettier": "2.8.8",
+    "react-native-rename": "^3.2.16",
+    "react-test-renderer": "19.0.0",
+    "typescript": "5.0.4"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}
