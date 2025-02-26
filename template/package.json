@@ -11,7 +11,7 @@
     "test:coverage:components": "jest --coverage --verbose --collectCoverageFrom='src/components/**/*.tsx' --detectOpenHandles --runInBand",
     "test:coverage:utils": "jest --coverage --verbose --collectCoverageFrom='src/utils/**/*.ts' --detectOpenHandles --runInBand",
     "prepare": "husky",
-    "postinstall": "git config core.editor cat",
+    "postinstall": "if [ ! -d .git ]; then git init; fi && git config core.editor cat",
     "android:dev:debug": "cd android && ./gradlew assembleDevDebug",
     "android:dev:release": "cd android && ./gradlew assembleDevRelease",
     "android:dev:bundle": "cd android && ./gradlew bundleDevRelease",
